@@ -200,10 +200,10 @@ namespace CloudFoundry.VisualStudio
                 package.SaveToFile(filepath);
                 if (currentProj != null)
                 {
-                    string projRoot = currentProj.FileName.ToString();
-                    string projProfileDirPath = string.Format("{0}\\Properties\\PublishProfiles", projRoot.Substring(0, projRoot.LastIndexOf("\\")));
+                    string projRoot = System.IO.Path.GetDirectoryName(currentProj.FullName);
+                    string projProfileDirPath = System.IO.Path.Combine(projRoot, "Properties", "PublishProfiles");
 
-                    if (projProfileDirPath.ToLower() == filepath.Substring(0, filepath.LastIndexOf("\\")).ToLower())
+                    if (projProfileDirPath.ToUpperInvariant() == System.IO.Path.GetDirectoryName(filepath).ToUpperInvariant())
                     {
                         currentProj.ProjectItems.AddFromFile(filepath);
                     }
